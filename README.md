@@ -13,3 +13,7 @@ because it can penalize legitimate hosts.
 - Design SDN controller in a modular way, using Multithreading and IPC
 
 
+Two solutions are implemented:
+- The first uses an anomaly detection mechanism based on the K-Means clustering
+  algorithm.
+- The second uses anomaly detection based on a dynamic threshold.
