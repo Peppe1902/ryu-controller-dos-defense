@@ -14,6 +14,13 @@ because it can penalize legitimate hosts.
 
 
 Two solutions are implemented:
-- The first uses an anomaly detection mechanism based on the K-Means clustering
-  algorithm.
+- The first uses an anomaly detection mechanism based on the K-Means clustering algorithm.
 - The second uses anomaly detection based on a dynamic threshold.
+
+In both cases a dataset of 3000 instances was built, with features obtained using the `OFPPortStatsRequest` Ryu method. Additinal features are derived by adopting a feature engineering approach:
+- ...
+- ...
+- ...
+- ...
+
+
