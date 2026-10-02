@@ -1,5 +1,4 @@
 # ryu-controller-dos-defense
-Ryu-based SDN controller for real-time DoS attack detection and mitigation
 
 The project consists of an implementation of a Ryu-based SDN controller for the
 detection and mitigation of a DoS attack from a malicious UDP host in a Mininet
