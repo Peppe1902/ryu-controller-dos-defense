@@ -73,15 +73,15 @@ called **Redis**.
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/18ea30dd-cdcb-4aeb-946a-8a853008de41" />
 
-It can operate as a **message broker** based on a **publisher/subscriber model**. This is an asynchronous communication system where:
-- the publisher sends a message on a channel;
-- one or more subscribers listen on that channel;
-- all the subscribers receive that message in real time;
-- the publisher does not know who the subscribers are, and the subscribers do not
-  know the publisher's identity. **They are decoupled**;
+It can operate as a **message broker** based on a **Publisher/Subscriber model**. This is an asynchronous communication system where:
+- the Publisher sends a message on a channel;
+- one or more Subscribers listen on that channel;
+- all the Subscribers receive that message in real time;
+- the Publisher does not know who the subscribers are, and the subscribers do not
+  know the Publisher's identity. **They are decoupled**;
 - the communication model is unidirectional.
 
-A third thread acting as a subscriber on the channel where the publisher (the external entity) sends the messages was designed. It is called **Listener**. Depending on the received commands, the subscriber acts accordingly.
+A third thread acting as a Subscriber on the channel where the Publisher (the external entity) sends the messages was designed. It is called **Listener**. Depending on the received commands, the subscriber acts accordingly.
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/4ac97e10-44c6-45ab-bb89-cbd54b6cd0ae" />
 
