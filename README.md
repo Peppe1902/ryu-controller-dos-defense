@@ -59,13 +59,12 @@ As a **Mitigation action** a different approach from simply blocking the port wa
 - **Flow table** for rule insertion
 - **Meter table** that can have different purposes like forcing a minimum transmission rate beyond which the packets are dropped. 
 
-Meter table is used limit link rate when anomaly detection algorithm raises a possible alarm condition. Packets that exceed the configured rate are dropped. This is an example of **traffic conditioning (policing)**. 
 
+Meter table is used limit link rate when anomaly detection algorithm raises a possible alarm condition. Packets that exceed the configured rate are dropped. This is an example of **traffic conditioning (policing)**. 
 
 ## Complete sytem architecture
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/53fb6c5d-cf41-48cd-a155-2420054a7599" />
-
 
 ## Testing
 
