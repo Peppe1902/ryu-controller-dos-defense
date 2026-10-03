@@ -4,6 +4,8 @@ The project consists of an implementation of a Ryu-based SDN controller for the
 detection and mitigation of a DoS attack from a malicious UDP host in a Mininet
 network. 
 
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/ad5a37f4-a2f5-4eda-b639-0b9a22d07d26" />
+
 The rules followed during the controller design are:
 - Avoid using a static threshold approach for detection of DoS attacks. This
 solution, despite its simplicity, requires attention on threshold choice
@@ -28,4 +30,15 @@ Since the controller has a network view, the host position (dpid and port number
 The first version of the controller adopts a K-means based clustering algorithm for anomaly detection:
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c6adcd56-14ae-40ee-a723-84859c57c367" />
+
+An alarm condition is signaled when the instance is closer to the centroid with the highest bandwidth utilization value.
+
+As a mitigation action a different approach from simply blocking the port was adopted. According to OpenFlow standard each switch is associated with:
+- Flow table for rule insertion
+- **Meter table** that can have different purposes like forcing a minimum transmission rate beyond which the packets are dropped. 
+
+Meter table is used limit link rate when anomaly detection algorithm signals a possible alarm condition to. Packets that exceed the configured rate are dropped. This is an example of **traffic conditioning (policing)**. 
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/53fb6c5d-cf41-48cd-a155-2420054a7599" />
+
 
