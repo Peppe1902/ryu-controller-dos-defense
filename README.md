@@ -68,27 +68,24 @@ Meter table is used limit link rate when anomaly detection algorithm raises a po
 
 
 ## Management Layer implementation
-Quindi scopo di tale sezione è stato quello di implementare una versione semplificata di Management Layer grazie ad uno strumento facilmente integrabile in Python detto Redis.
+The purpose of this section is to present a simplified implementation of the management layer in an SDN environment, based on an easily integrable Python tool
+called **Redis**.
 
-Il modello publisher/subscriber è un sistema di comunicazione asincrona dove:
-
-Un soggetto (il Publisher) manda un messaggio su un canale
-
-Uno o più soggetti (i Subscriber) ascoltano quel canale
-
- Tutti i Subscriber ricevono quel messaggio in tempo reale
-
- il Publisher non sa chi sono i Subscriber, e i Subscriber non sanno chi pubblica. Sono disaccoppiati.
-
- Il modello è monodirezionale (per ovviare al problema possiamo aprire due canali in modo che un client faccia sia da Publisher che Subscriber)
+It can operate as a **message broker** based on a **publisher/subscriber model**. This is an asynchronous communication system where:
+- the publisher sends a message on a channel;
+- one or more subscribers listen on that channel;
+- all the subscribers receive that message in real time;
+- the publisher does not know who the subscribers are, and the subscribers do not
+  know the publisher's identity. **They are decoupled**;
+- the communication model is unidirectional.
 
-Per poter integrare quanto descritto precedentemente, è stato definito un terzo thread nel controller RYU il quale diverrà Subscriber di un canale, lo stesso che il Publisher (cioè, noi) userà per inviare alcuni comandi. In seguito, il Subscriber, in base ai comandi ricevuti, agirà di conseguenza.
+A third thread acting as a subscriber on the channel where the publisher (the external entity) sends the messages was designed. It is called **Listener**. Depending on the received commands, the subscriber acts accordingly.
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/4ac97e10-44c6-45ab-bb89-cbd54b6cd0ae" />
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/f5deae1c-737f-414c-812e-74aab2dc5d2b" />
 
-Four commands that can be sent through redic-cli to Listener task, have been defined :
+Four commands that can be sent through `redis-cli` to Listener task, have been defined :
 - block_ip,indirizzo_ip,priority_rule,timeout
 - unblock_ip,indirizzo_ip,priority_rule”
 - read_log_anomalies
