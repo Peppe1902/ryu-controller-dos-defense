@@ -88,10 +88,10 @@ A third thread acting as a Subscriber on the channel, where the Publisher (the e
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/f5deae1c-737f-414c-812e-74aab2dc5d2b" />
 
 Four commands that can be sent through `redis-cli` to Listener task, have been defined :
-- block_ip,indirizzo_ip,priority_rule,timeout
-- unblock_ip,indirizzo_ip,priority_rule”
-- read_log_anomalies
-- clean_log_anomalies
+- `block_ip,indirizzo_ip,priority_rule,timeout`
+- `unblock_ip,indirizzo_ip,priority_rule`
+- `read_log_anomalies`
+- `clean_log_anomalies`
 
 ## Testing
 
