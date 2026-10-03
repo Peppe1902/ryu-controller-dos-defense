@@ -56,7 +56,7 @@ within the window size, have been inserted. As expected the value of Q3 decrease
 
 
 As a **Mitigation action** a different approach from simply blocking the port was adopted. According to OpenFlow standard each switch is associated with:
-- **Flow table** for rule insertion
+- **Flow table** for rule insertion.
 - **Meter table** that can have different purposes like forcing a minimum transmission rate beyond which the packets are dropped. 
 
 
