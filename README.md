@@ -33,11 +33,19 @@ The first version of the controller adopts a K-means based clustering algorithm 
 
 An alarm condition is raised when the instance is closer to the centroid with the highest bandwidth utilization value.
 
+The second version adopts a different anomaly detection algorithm. Starting from the pre-build dataset, it is possible to dynamically add another
+500 instances (we call it `window_size`). If the window saturates, the last 500 instances are removed to allow the insertion of new ones.
+The algorithm requires the first and the third quartiles Q1 and Q3, of `bandwidth_utilization` features, to be calculated. This allows the computation of the interquartile range **IQR = Q3 − Q1**.
+
+An instance is classified as an anomaly if its bandwidth utilization value is higher than the calculated **Q3 + 0.25 · IQR**
+
+
 As a mitigation action a different approach from simply blocking the port was adopted. According to OpenFlow standard each switch is associated with:
 - **Flow table** for rule insertion
 - **Meter table** that can have different purposes like forcing a minimum transmission rate beyond which the packets are dropped. 
 
 Meter table is used limit link rate when anomaly detection algorithm raises a possible alarm condition. Packets that exceed the configured rate are dropped. This is an example of **traffic conditioning (policing)**. 
+
 
 ## Complete sytem architecture
 
