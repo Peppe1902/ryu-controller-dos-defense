@@ -23,4 +23,9 @@ In both cases a dataset of 3000 instances was built, with features obtained usin
 - `bytes_packets_tx_ratio` : ratio that has the same meaning of the previous feature but in transmission.
 - `efficiency` : index that show if a link is used more for transmission than reception
 
+Since the controller has a network view, the host position (dpid and port number), IP address and maximum associated bandwidth configured in Mininet, are provided to the controller with a text file named `hosts_info.txt`. A possibile feature development is to allow dynamic enumaration of the hosts to be monitored.
+
+The first version of the controller adopts a K-means based clustering algorithm for anomaly detection:
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/c6adcd56-14ae-40ee-a723-84859c57c367" />
 
