@@ -57,7 +57,7 @@ Second case, malicious host generates large UDP traffic:
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/fe2c4026-310d-427d-8c1f-92f91338c4ac" />
 
-Anomaly detection algorithm raised an alarm condition and mitigation action limits traffic rate to 1Mbs:
+Anomaly detection algorithm raises an alarm condition and mitigation action limits traffic rate to 1Mbs:
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/b6e0e08f-0da3-4085-b0e9-1c42450da2dd" />
 
