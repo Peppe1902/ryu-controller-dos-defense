@@ -31,7 +31,7 @@ The first version of the controller adopts a **K-means based clustering algorith
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c6adcd56-14ae-40ee-a723-84859c57c367" />
 
-An alarm condition is raised when the instance is closer to the centroid with the highest bandwidth utilization value.
+An alarm condition is raised when the instance is closer to the centroid with the highest `bandwidth_utilization` value.
 
 The second version adopts a different anomaly detection algorithm. Starting from the pre-build dataset, it is possible to dynamically add another
 500 instances (we call it `window_size`). If the window saturates, the last 500 instances are removed to allow the insertion of new ones.
