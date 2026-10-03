@@ -31,7 +31,7 @@ The first version of the controller adopts a K-means based clustering algorithm 
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c6adcd56-14ae-40ee-a723-84859c57c367" />
 
-An alarm condition is signaled when the instance is closer to the centroid with the highest bandwidth utilization value.
+An alarm condition is raised when the instance is closer to the centroid with the highest bandwidth utilization value.
 
 As a mitigation action a different approach from simply blocking the port was adopted. According to OpenFlow standard each switch is associated with:
 - **Flow table** for rule insertion
