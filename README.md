@@ -41,10 +41,10 @@ An instance is classified as an anomaly if its bandwidth utilization value is hi
 
 *The computation of Q3, Q1 and IQR will be affected by the last inserted instances as well as by the pre-built dataset*
 
-Example:
+**Example:**
 
-Different values of Q3, Q1 and IRQ are shown with initial instances of pre-built dataset and after 
-Si riportano successivamente i valori di 𝑄3 e 𝑄1 con le istanze iniziali del dataset (before) e dopo aver raccolto un numero di istanze aggiuntive entro la window_size con carico basso (after). Quello che ci si aspetta è una riduzione di 𝑄3,
+The values of Q3, Q1 and IQR are initially calculated on the current instances of the pre-built dataset, and then recomputed after some extra low-load instances
+within the window size have been inserted. As expected the value of Q3 decreased.
 
 **Before:**
 
