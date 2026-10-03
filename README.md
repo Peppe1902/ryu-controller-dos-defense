@@ -43,8 +43,8 @@ An instance is classified as an anomaly if its bandwidth utilization value is hi
 
 **Example:**
 
-The values of Q3, Q1 and IQR are initially calculated on the current instances of the pre-built dataset, and then recomputed after some extra low-load instances
-within the window size have been inserted. As expected the value of Q3 decreased.
+The values of Q3, Q1 and IQR are initially calculated on the current instances of the pre-built dataset, and then recomputed after some extra low-load instances, 
+within the window size, have been inserted. As expected the value of Q3 decreased.
 
 **Before:**
 
