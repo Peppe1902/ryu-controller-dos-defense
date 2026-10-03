@@ -39,8 +39,9 @@ The algorithm requires the first and the third quartiles Q1 and Q3, of `bandwidt
 
 An instance is classified as an anomaly if its bandwidth utilization value is higher than the calculated **Q3 + 0.25 · IQR**
 
+*The computation of Q3, Q1 and IQR will be affected by the last inserted instances as well as by the pre-built dataset*
 
-As a mitigation action a different approach from simply blocking the port was adopted. According to OpenFlow standard each switch is associated with:
+As a **Mitigation action** a different approach from simply blocking the port was adopted. According to OpenFlow standard each switch is associated with:
 - **Flow table** for rule insertion
 - **Meter table** that can have different purposes like forcing a minimum transmission rate beyond which the packets are dropped. 
 
