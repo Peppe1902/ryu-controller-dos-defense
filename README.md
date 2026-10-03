@@ -66,6 +66,41 @@ Meter table is used limit link rate when anomaly detection algorithm raises a po
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/53fb6c5d-cf41-48cd-a155-2420054a7599" />
 
+Il modello publisher/subscriber è un sistema di comunicazione asincrona dove:
+
+Un soggetto (il Publisher) manda un messaggio su un canale
+
+Uno o più soggetti (i Subscriber) ascoltano quel canale
+
+ Tutti i Subscriber ricevono quel messaggio in tempo reale
+
+ il Publisher non sa chi sono i Subscriber, e i Subscriber non sanno chi pubblica. Sono disaccoppiati.
+
+ Il modello è monodirezionale (per ovviare al problema possiamo aprire due canali in modo che un client faccia sia da Publisher che Subscriber)
+
+Per poter integrare quanto descritto precedentemente, è stato definito un terzo thread nel controller RYU il quale diverrà Subscriber di un canale, lo stesso che il Publisher (cioè, noi) userà per inviare alcuni comandi. In seguito, il Subscriber, in base ai comandi ricevuti, agirà di conseguenza.
+
+## Management Layer implementation
+Quindi scopo di tale sezione è stato quello di implementare una versione semplificata di Management Layer grazie ad uno strumento facilmente integrabile in Python detto Redis.
+
+
+<img width="995" height="582" alt="image" src="https://github.com/user-attachments/assets/4ac97e10-44c6-45ab-bb89-cbd54b6cd0ae" />
+
+
+<img width="1148" height="438" alt="image" src="https://github.com/user-attachments/assets/f5deae1c-737f-414c-812e-74aab2dc5d2b" />
+
+Sono stati definiti quattro comandi che mediante la redis-cli è possibile inviare al task Listener:
+
+
+“block_ip,indirizzo_ip,priority_rule,timeout”
+
+“unblock_ip,indirizzo_ip,priority_rule”
+
+“read_log_anomalies”
+
+“clean_log_anomalies”
+
+
 ## Testing
 
 1) First version with anomaly dection algorithm based on clustering algorithm described previuosly:
