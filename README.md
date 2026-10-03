@@ -71,6 +71,8 @@ Meter table is used limit link rate when anomaly detection algorithm raises a po
 The purpose of this section is to present a simplified implementation of the management layer in an SDN environment, based on an easily integrable Python tool
 called **Redis**.
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/18ea30dd-cdcb-4aeb-946a-8a853008de41" />
+
 It can operate as a **message broker** based on a **publisher/subscriber model**. This is an asynchronous communication system where:
 - the publisher sends a message on a channel;
 - one or more subscribers listen on that channel;
@@ -81,9 +83,9 @@ It can operate as a **message broker** based on a **publisher/subscriber model**
 
 A third thread acting as a subscriber on the channel where the publisher (the external entity) sends the messages was designed. It is called **Listener**. Depending on the received commands, the subscriber acts accordingly.
 
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/4ac97e10-44c6-45ab-bb89-cbd54b6cd0ae" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/4ac97e10-44c6-45ab-bb89-cbd54b6cd0ae" />
 
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/f5deae1c-737f-414c-812e-74aab2dc5d2b" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/f5deae1c-737f-414c-812e-74aab2dc5d2b" />
 
 Four commands that can be sent through `redis-cli` to Listener task, have been defined :
 - block_ip,indirizzo_ip,priority_rule,timeout
