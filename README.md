@@ -43,6 +43,7 @@ An instance is classified as an anomaly if its bandwidth utilization value is hi
 
 Example:
 
+Different values of Q3, Q1 and IRQ are shown with initial instances of pre-built dataset and after 
 Si riportano successivamente i valori di 𝑄3 e 𝑄1 con le istanze iniziali del dataset (before) e dopo aver raccolto un numero di istanze aggiuntive entro la window_size con carico basso (after). Quello che ci si aspetta è una riduzione di 𝑄3,
 
 **Before:**
