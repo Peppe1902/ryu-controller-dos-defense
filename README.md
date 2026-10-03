@@ -39,7 +39,7 @@ The algorithm requires the first and the third quartiles Q1 and Q3, of `bandwidt
 
 An instance is classified as an *anomaly* if its `bandwidth_utilization` value is higher than the calculated **Q3 + 0.25 · IQR**.
 
-*The computation of Q3, Q1 and IQR will be affected by the last inserted instances as well as by the pre-built dataset*
+*The computation of Q3, Q1 and IQR will be affected by the last inserted instances as well as by the pre-built dataset*.
 
 **Example:**
 
