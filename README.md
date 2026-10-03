@@ -41,6 +41,19 @@ An instance is classified as an anomaly if its bandwidth utilization value is hi
 
 *The computation of Q3, Q1 and IQR will be affected by the last inserted instances as well as by the pre-built dataset*
 
+Example:
+
+Si riportano successivamente i valori di 𝑄3 e 𝑄1 con le istanze iniziali del dataset (before) e dopo aver raccolto un numero di istanze aggiuntive entro la window_size con carico basso (after). Quello che ci si aspetta è una riduzione di 𝑄3,
+
+**Before:**
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/1f8634ea-181c-4917-96c0-3524c0ae0499" />
+
+**After:**
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/9a211b6b-9af0-41a9-8cbb-36c8e6154ce4" />
+
+
 As a **Mitigation action** a different approach from simply blocking the port was adopted. According to OpenFlow standard each switch is associated with:
 - **Flow table** for rule insertion
 - **Meter table** that can have different purposes like forcing a minimum transmission rate beyond which the packets are dropped. 
