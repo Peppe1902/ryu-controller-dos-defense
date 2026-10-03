@@ -61,7 +61,7 @@ Anomaly detection algorithm raises an alarm condition and mitigation action limi
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/b6e0e08f-0da3-4085-b0e9-1c42450da2dd" />
 
-<img width="1065" height="691" alt="image" src="https://github.com/user-attachments/assets/fb155d3d-5676-4edf-a645-afa34f7d3768" />
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/fb155d3d-5676-4edf-a645-afa34f7d3768" />
 
 - **Red** — UDP traffic
 - **Blue** — TCP traffic
