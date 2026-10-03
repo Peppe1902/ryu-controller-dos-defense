@@ -18,9 +18,9 @@ Two solutions are implemented:
 - The second uses anomaly detection based on a dynamic threshold.
 
 In both cases a dataset of 3000 instances was built, with features obtained using the `OFPPortStatsRequest` Ryu method. Additinal features are derived by adopting a feature engineering approach:
-- bandwidth utilization : very useful to measure how heavily a link is used. Its bandwidth can be set in Mininet. This feature is calculated as ratio of the sum of transmit and receive throughput to the link bandwidth.
-- bytes_packets_rx_ratio : ratio that can help to understand whether few big packets or many small packets are being received. 
-- bytes_packets_tx_ratio : ratio that has the same meaning of the previous feature but in transmission.
-- efficiency : index that show if a link is used more in transmission than in reception
+- `bandwidth utilization` : very useful to measure how heavily a link is used. Its bandwidth can be set in Mininet. This feature is calculated as ratio of the sum of transmit and receive throughput to the link bandwidth.
+- `bytes_packets_rx_ratio` : ratio that can help to understand whether few big packets or many small packets are being received. 
+- `bytes_packets_tx_ratio` : ratio that has the same meaning of the previous feature but in transmission.
+- `efficiency` : index that show if a link is used more for transmission than reception
 
 
