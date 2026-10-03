@@ -81,7 +81,7 @@ It can operate as a **message broker** based on a **Publisher/Subscriber model**
   know the Publisher's identity. **They are decoupled**;
 - the communication model is unidirectional.
 
-A third thread acting as a Subscriber on the channel where the Publisher (the external entity) sends the messages was designed. It is called **Listener**. Depending on the received commands, the subscriber acts accordingly.
+A third thread acting as a Subscriber on the channel, where the Publisher (the external entity) sends the messages, was designed. It is called **Listener**. Depending on the received commands, the subscriber acts accordingly.
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/4ac97e10-44c6-45ab-bb89-cbd54b6cd0ae" />
 
