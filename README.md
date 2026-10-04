@@ -101,7 +101,9 @@ It can operate as a **message broker** based on a **Publisher/Subscriber model**
 
 A third thread acting as a Subscriber on the channel, where the Publisher (the external entity) sends the messages, was designed. It is called **Listener**. Depending on the received commands, the subscriber acts accordingly.
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/4ac97e10-44c6-45ab-bb89-cbd54b6cd0ae" />
+<p align="center">
+  <img width="600" alt="image" src="https://github.com/user-attachments/assets/4ac97e10-44c6-45ab-bb89-cbd54b6cd0ae" />
+</p>
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/f5deae1c-737f-414c-812e-74aab2dc5d2b" />
 
