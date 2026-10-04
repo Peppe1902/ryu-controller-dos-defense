@@ -113,7 +113,7 @@ Four commands that can be sent through `redis-cli` to Listener task, have been d
 
 ## Testing
 
-1) First version with anomaly dection algorithm based on clustering algorithm described previuosly:
+1) First version with the clustering-based anomaly detection algorithm based described previuosly:
 
 Two different traffic conditions are shown in this section:
 - when no anomaly is detected. 
@@ -136,7 +136,7 @@ Anomaly detection algorithm raises an alarm condition and mitigation action limi
 - **Red** — UDP traffic
 - **Blue** — TCP traffic
 
-2) Second version with dynamic threashold based anomaly dection algorithm :
+2) Second version with the dynamic threashold based anomaly detection algorithm :
 
 <img width="800" alt="image" alt="image" src="https://github.com/user-attachments/assets/24843364-2c8e-41a1-82fc-f78c34079b74" />
 
