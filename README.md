@@ -79,14 +79,17 @@ Meter table is used limit link rate when anomaly detection algorithm raises a po
 
 ## Complete sytem architecture
 
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/53fb6c5d-cf41-48cd-a155-2420054a7599" />
-
+<p align="center">
+  <img width="800" alt="image" src="https://github.com/user-attachments/assets/53fb6c5d-cf41-48cd-a155-2420054a7599" />
+</p>
 
 ## Management Layer implementation
 The purpose of this section is to present a simplified implementation of the management layer in an SDN environment, based on an easily integrable Python tool
 called **Redis**.
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/18ea30dd-cdcb-4aeb-946a-8a853008de41" />
+<p align="center">
+  <img width="600" alt="image" src="https://github.com/user-attachments/assets/18ea30dd-cdcb-4aeb-946a-8a853008de41" />
+</p>
 
 It can operate as a **message broker** based on a **Publisher/Subscriber model**. This is an asynchronous communication system where:
 - the Publisher sends a message on a channel;
