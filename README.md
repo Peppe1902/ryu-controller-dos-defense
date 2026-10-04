@@ -18,9 +18,6 @@ because it can penalize legitimate hosts.
 ## Setup
 
 - **Host:** PC running Ubuntu 22.04 in a Virtual machine
-- **RAM:** : at least 4 GB
-- **CPU:** : at least 4 core
-- **Disk** : at least 30 GB
 
 ## Tools & Technologies
 
