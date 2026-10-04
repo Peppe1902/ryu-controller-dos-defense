@@ -27,6 +27,7 @@ because it can penalize legitimate hosts.
 - **Network emulator:** Mininet
 - **Traffic analysis:** Wireshark
 - **Message broker:** Redis
+- **Python 3.10**
 
 
 ## Implemented Solutions
