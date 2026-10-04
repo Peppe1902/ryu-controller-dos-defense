@@ -15,6 +15,22 @@ because it can penalize legitimate hosts.
 - Design SDN controller in a modular way, using Multithreading and IPC
 
 
+## Setup
+
+- **Host:** PC running Ubuntu 22.04 in a Virtual machine
+- **RAM:** 4 GB
+- **CPU:** 4 core
+
+## Tools & Technologies
+
+- **SDN controller framework:** Ryu
+- **Network emulator:** Mininet
+- **Traffic analysis:** Wireshark
+- **Message broker:** Redis
+
+
+## Implemented Solutions
+
 Two solutions are implemented:
 - The first uses an anomaly detection mechanism based on the K-Means clustering algorithm.
 - The second uses anomaly detection based on a dynamic threshold.
