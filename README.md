@@ -136,7 +136,7 @@ Anomaly detection algorithm raises an alarm condition and mitigation action limi
 - **Red** — UDP traffic
 - **Blue** — TCP traffic
 
-2) Second version with anomaly dection algorithm based on the dynamic threashold approach:
+2) Second version with dynamic threashold based anomaly dection algorithm :
 
 <img width="800" alt="image" alt="image" src="https://github.com/user-attachments/assets/24843364-2c8e-41a1-82fc-f78c34079b74" />
 
