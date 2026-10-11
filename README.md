@@ -88,7 +88,7 @@ The purpose of this section is to present a simplified implementation of the man
 called **Redis**.
 
 <p align="center">
-  <img width="600" alt="image" src="https://github.com/user-attachments/assets/18ea30dd-cdcb-4aeb-946a-8a853008de41" />
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/18ea30dd-cdcb-4aeb-946a-8a853008de41" />
 </p>
 
 It can operate as a **message broker** based on a **Publisher/Subscriber model**. This is an asynchronous communication system where:
