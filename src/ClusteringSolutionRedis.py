@@ -21,7 +21,7 @@ class Monitor(app_manager.RyuApp) :
 
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
     
-    #costruttore
+    #Constructor
     def __init__(self,*args,**wargs) :
         super(Monitor,self).__init__(*args,**wargs)
         self.name_file = 'dataset.txt'
@@ -36,7 +36,7 @@ class Monitor(app_manager.RyuApp) :
         #print(self.centroids)
         self.switch_table = {}
         self.datapaths = {}
-        self.period = 5 #periodo del thread
+        self.period = 5 #thread period
         self.old_rx_packets = {}
         self.old_tx_packets = {}
         self.old_rx_bytes = {}
@@ -59,8 +59,8 @@ class Monitor(app_manager.RyuApp) :
         self.threadMitigation.start()
 
         self.redis_client = redis.Redis() 
-        self.pubsub = self.redis_client.pubsub() #creo un oggetto pubsub
-        self.pubsub.subscribe(self.controller_channel_request) #divento subscriber del canale
+        self.pubsub = self.redis_client.pubsub() #pubsub object creation
+        self.pubsub.subscribe(self.controller_channel_request) #channel subscriber
     
         self.threadListener= threading.Thread(target = self.listen_channel)
         self.threadListener.daemon=True
@@ -89,7 +89,6 @@ class Monitor(app_manager.RyuApp) :
 
         df = df.drop(df.columns[[0,1]],axis=1)
 
-        #definiamo come centroide quello che è la mediana
         kmeans = KMeans(n_clusters = 3,random_state=0)
         
         kmeans.fit(df)
@@ -97,7 +96,7 @@ class Monitor(app_manager.RyuApp) :
         return kmeans.cluster_centers_
     
 
-    def controlAnomaly(self,instance): #metodo per il rilevamento di una anomalia in base ad una istanza
+    def controlAnomaly(self,instance): #anomaly detection mechanism, instance passed as input to the method
 
         min_distance = np.sqrt(np.sum((instance-self.centroids[0,:])**2))
         index_cluster = 0
@@ -120,10 +119,10 @@ class Monitor(app_manager.RyuApp) :
 
     def listen_channel(self) :
     
-        for message in self.pubsub.listen() :#metto in ascolto di messaggi
+        for message in self.pubsub.listen() : #waiting to receive messages
             if message['type'] == 'message' :
-                command = message['data'].decode() #decodifico i dati ricevuti
-                if command.startswith('block_ip') : #comando per bloccare un flusso di pacchetti IP
+                command = message['data'].decode() #received data decoding
+                if command.startswith('block_ip') : #command to block the IP packet flow
 
                     print(("Thread Listener : Received command : %s") %(command))
                     command_info = command.split(',')
@@ -136,13 +135,13 @@ class Monitor(app_manager.RyuApp) :
                         #ofproto = datapath.ofproto
                         ofp_parser = datapath.ofproto_parser
                         
-                        #blocco il flusso di pacchetti con quell'ip sorgente
+                        #block the flow of packets with that IP
                         match = ofp_parser.OFPMatch(eth_type = 0x0800,ipv4_src = ip) 
                         actions = []
                         
                         self.add_flow(datapath,match,priority,actions,hard_timeout)
 
-                if command.startswith('unblock_ip') : #comando per sbloccare un flusso di pacchetti IP
+                if command.startswith('unblock_ip') : #command to unblock the IP packet flow
 
                     print(("Thread Listener : Received command : %s") %(command))
                     command_info = command.split(',')
@@ -154,26 +153,26 @@ class Monitor(app_manager.RyuApp) :
                         #ofproto = datapath.ofproto
                         ofp_parser = datapath.ofproto_parser
 
-                        #sblocco il flusso di pacchetti con quell'ip sorgente
+                        #unblock the flow of packets with that IP
                         match=ofp_parser.OFPMatch(eth_type=0x0800,ipv4_src=ip)
 
                         self.remove_flow(datapath,match,priority)
 
-                if command.startswith('read_log_anomalies') : #comando per leggere il log delle anomalie
+                if command.startswith('read_log_anomalies') : #command to read the anomaly log
                     print(("Thread Listener : Received command : %s") %(command))
                     with self.lock_file :
                         with open(self.log_file,'r') as f :
                             lines = f.readlines()
                             for line in lines :
                                 self.redis_client.publish(self.controller_channel_response,line.strip())
-                                #line.strip rimuove caratteri spazio all'inizio alla fine
+                             
                        
              
-                if command.startswith('clean_log_anomalies') : #comando per svuotare il log delle anomalie
+                if command.startswith('clean_log_anomalies') : #command to empty the anomaly log
                     print(("Thread Listener : Received command : %s") %(command))
                     with self.lock_file :
                         with open(self.log_file, 'w') as log_f :
-                            pass  # Fa nulla, ma apre il file in scrittura, quindi lo svuota
+                            pass 
                     
 
     @set_ev_cls(ofp_event.EventOFPStateChange,[MAIN_DISPATCHER,DEAD_DISPATCHER])
@@ -183,17 +182,17 @@ class Monitor(app_manager.RyuApp) :
         if ev.state==MAIN_DISPATCHER :
             if datapath.id not in self.datapaths.keys() :
                 self.datapaths[datapath.id] = datapath
-        elif ev.state==DEAD_DISPATCHER : #switch disconnesso
+        elif ev.state==DEAD_DISPATCHER : #disconnected switch 
             if datapath.id in self.datapaths.keys() :
-                del self.datapaths[datapath.id] #rimuovo il datapath corrispondente
+                del self.datapaths[datapath.id] # remove the corresponding datapath
 
 
-    #funzione richiamata dal task di monitoraggio
+    #function called by the monitoring task
     def monitor_ports(self) :
         while True :
 
             msg_list = []
-            #devo solo monitorare le porte degli switch che sono direttamente connesse agli hosts
+           #monitoring of the switch ports directly connected to the hosts
             for dpid,in_port in self.host_locations.values() :
                 
                 if dpid in self.datapaths.keys() :
@@ -212,8 +211,7 @@ class Monitor(app_manager.RyuApp) :
             time.sleep(self.period)
     
 
-    #gestiamo l'evento di ricezione delle features di uno switch, la fase di negoziazione è 
-    #quella di CONFIG
+
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures,CONFIG_DISPATCHER)
     def switch_features_handler(self,ev) :
         msg = ev.msg
@@ -221,14 +219,14 @@ class Monitor(app_manager.RyuApp) :
         ofproto = datapath.ofproto
         ofp_parser = datapath.ofproto_parser
 
-        match = ofp_parser.OFPMatch() #match di qualunque pacchetto 
+        match = ofp_parser.OFPMatch()
 
         actions = [ofp_parser.OFPActionOutput(ofproto.OFPP_CONTROLLER,ofproto.OFPCML_NO_BUFFER)]
 
         self.add_flow(datapath,match,0,actions,0)
 
 
-    #installazione regola nella flow-table
+    #Flow-table rule installation
     def add_flow(self,datapath,match,priority,actions,hard_timeout,buffer_id=None) :
         
         ofproto = datapath.ofproto
@@ -254,7 +252,7 @@ class Monitor(app_manager.RyuApp) :
         if buffer_id :
             msg = ofp_parser.OFPFlowMod(datapath=datapath,match=match,buffer_id=buffer_id,command=ofproto.OFPFC_DELETE_STRICT,
                                     priority=priority,out_port = ofproto.OFPP_ANY,out_group=ofproto.OFPG_ANY)
-            #OFPFC_DELETE_STRICT elimina la regolaì che matcha perfettamente e con la stessa priorità
+            #OFPFC_DELETE_STRICT removes the rule that matches exactly and has the same priority
         else :
             msg = ofp_parser.OFPFlowMod(datapath=datapath,match=match,command=ofproto.OFPFC_DELETE_STRICT,
                                     priority=priority,out_port = ofproto.OFPP_ANY,out_group=ofproto.OFPG_ANY)
@@ -274,15 +272,14 @@ class Monitor(app_manager.RyuApp) :
             ofproto = datapath.ofproto 
             ofp_parser = datapath.ofproto_parser
                
-            #----------limito il rate del flusso con quell'IP sorgente------------
+            #---------- Rate limiting for the flow with that source IP ----------
             match = ofp_parser.OFPMatch(in_port = in_port,eth_type=ether_types.ETH_TYPE_IP ,ipv4_src=malicious_ip)
        
             msg_meter = ofp_parser.OFPMeterMod(datapath=datapath,command = ofproto.OFPMC_ADD,flags=ofproto.OFPMF_KBPS,meter_id=1,
                                        bands=[ofp_parser.OFPMeterBandDrop(rate=1000, burst_size=500)])
             datapath.send_msg(msg_meter)
 
-            actions = [ofp_parser.OFPActionOutput(ofproto.OFPP_NORMAL)] #"lascio che lo switch si comporti normalmente, 
-            #come se fosse uno switch L2 tradizionale".
+            actions = [ofp_parser.OFPActionOutput(ofproto.OFPP_NORMAL)] 
 
             instr = [ofp_parser.OFPInstructionMeter(meter_id=1),
                  ofp_parser.OFPInstructionActions(ofproto.OFPIT_APPLY_ACTIONS,actions)]
@@ -295,7 +292,7 @@ class Monitor(app_manager.RyuApp) :
     @set_ev_cls(ofp_event.EventOFPPortStatsReply,MAIN_DISPATCHER)
     def port_stats_handler(self,ev) :
 
-        #se non è presente l'id di quello switch lo inserisco inizializzandolo ad un default value
+  
         self.old_rx_bytes.setdefault(ev.msg.datapath.id,{})
         self.old_tx_bytes.setdefault(ev.msg.datapath.id,{})
         self.old_rx_packets.setdefault(ev.msg.datapath.id,{})
@@ -316,14 +313,14 @@ class Monitor(app_manager.RyuApp) :
             if port_no == ofproto_v1_3.OFPP_LOCAL :
                 continue
 
-            #se non è presente la chaive port_no associata a quello switch inizializzo il valore a 0
+            
             self.old_rx_bytes[dpid].setdefault(port_no,0)
             self.old_tx_bytes[dpid].setdefault(port_no,0)
             self.old_rx_packets[dpid].setdefault(port_no,0)
             self.old_tx_packets[dpid].setdefault(port_no,0)
-
-            #calcolo il throughput come differenza tra new e old e divido per il periodo
-            #la moltiplicazione per 8 è per passare a bps
+            
+            # Throughput computation: difference between new and old values divided by the period
+            # Multiply by 8 to convert to bps
             self.throughput_rx_bps[dpid][port_no] = (8*(stat.rx_bytes - self.old_rx_bytes[dpid][port_no])) / self.period
             self.throughput_tx_bps[dpid][port_no] = (8*(stat.tx_bytes - self.old_tx_bytes[dpid][port_no])) / self.period
 
@@ -337,7 +334,7 @@ class Monitor(app_manager.RyuApp) :
             self.old_rx_packets[dpid][port_no] = stat.rx_packets
             self.old_tx_packets[dpid][port_no] = stat.tx_packets
 
-            #features derivate utili per rendere il clustering migliore
+            #computation of derivated features
             bytes_packets_rx_ratio = delta_rx_bytes / (delta_rx_packets + 1e-10)
             bytes_packets_tx_ratio = delta_tx_bytes / (delta_tx_packets + 1e-10)
             efficiency = delta_tx_packets / (delta_rx_packets + delta_tx_packets + 1e-10)
@@ -359,12 +356,12 @@ class Monitor(app_manager.RyuApp) :
                 "throughput_rx_bps" : self.throughput_rx_bps[dpid][port_no]
             }])
 
-            #mostriamo solo alcune delle features
+    
             ports.append(("dpid = %d port_no = %d delta_rx_packets = %s delta_rx_bytes = %s delta_tx_packets = %s delta_tx_bytes = %s "
             "throughput_tx_bps = %s throughput_rx_bps= %s") % (dpid,port_no,delta_rx_packets,delta_rx_bytes,delta_tx_packets,delta_tx_bytes,self.throughput_tx_bps[dpid][port_no],
                                                             self.throughput_rx_bps[dpid][port_no]))
 
-            #Prepara la riga del dataset per scriverla nel file
+            
             line = "{},{},{},{},{},{},{},{},{},{},{},{}\n".format(
                 dpid,
                 port_no,
@@ -398,8 +395,7 @@ class Monitor(app_manager.RyuApp) :
                 except  queue.Full :
                   self.logger.info("\n\n****Queue Full proceed with the execution****\n\n")
             
-            #scrivi la riga nel file
-            #with open(self.name_file, "a") as f: #apro in modalità append
+            #with open(self.name_file, "a") as f: 
                 #f.write(line)
 
         self.logger.info("****Datapath = %d  Ports = \n",ev.msg.datapath.id)
@@ -408,7 +404,6 @@ class Monitor(app_manager.RyuApp) :
         self.logger.info("-------------------------------------------------\n")
 
 
-    #ricezione packet_in che viene inviato dallo switch al controller quando non sa cosa fare
     @set_ev_cls(ofp_event.EventOFPPacketIn,MAIN_DISPATCHER)
     def packet_in_handler(self,ev) :
         if ev.msg.msg_len < ev.msg.total_len :
@@ -421,11 +416,11 @@ class Monitor(app_manager.RyuApp) :
         msg = ev.msg
         in_port = msg.match['in_port']
 
-        pkt = packet.Packet(ev.msg.data) #converto in pacchetto di rete
+        pkt = packet.Packet(ev.msg.data) 
 
         eth = pkt.get_protocol(ethernet.ethernet) 
 
-        if eth.ethertype == ether_types.ETH_TYPE_LLDP : #ignoro pacchetti inerenti alla topologia
+        if eth.ethertype == ether_types.ETH_TYPE_LLDP : 
             return
 
         #source and destination mach
@@ -436,29 +431,29 @@ class Monitor(app_manager.RyuApp) :
 
         self.switch_table.setdefault(dpid,{})
 
-        #regola di autoapprendimento switch
+       
         self.switch_table[dpid][eth_src] = in_port
 
         out_port = None
         if eth_dst in self.switch_table[dpid] :
             out_port = self.switch_table[dpid][eth_dst] 
         else :
-            out_port = ofproto.OFPP_FLOOD    #invio su tutte le porte eccetto da quella da cui l'ho ricevuta
+            out_port = ofproto.OFPP_FLOOD    
 
         actions = [ofp_parser.OFPActionOutput(out_port)]
 
-        #se non devo fare flood
+        #If flooding must not be performed
         if out_port != ofproto.OFPP_FLOOD  :
             match = ofp_parser.OFPMatch(in_port=in_port,eth_src=eth_src,eth_dst=eth_dst)
 
-            if msg.buffer_id != ofproto.OFP_NO_BUFFER : #dato bufferizzato nello switch
+            if msg.buffer_id != ofproto.OFP_NO_BUFFER : #data stored in the switch
                 self.add_flow(datapath,match,1,actions,0,msg.buffer_id)
-                return #lo switch  ha tutto quello che gli serve per fare il forwarding
+                return 
             else :
                 self.add_flow(datapath,match,1,actions,0)
 
         data = None
-        #se il dato non è bufferizzato invio il dato in packetOut (invio al "volo")
+   
         if msg.buffer_id == ofproto.OFP_NO_BUFFER : 
             data = ev.msg.data
 
