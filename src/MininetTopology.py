@@ -12,8 +12,8 @@ class Environmnet(object) :
     def __init__ (self) :
 
         #Create a network
-        #self.network = Mininet(controller=DefaultController,link = TCLink) #uso il controller di default
-        #network è un oggetto di tipo mininet.net.Mininet
+        #self.network = Mininet(controller=DefaultController,link = TCLink) #Default Controller
+        #network is a mininet.net.Mininet object
         self.network = Mininet(controller=RemoteController,link = TCLink) 
         info('***Starting controller\n')
 
@@ -24,8 +24,8 @@ class Environmnet(object) :
 
         info('**Adding hosts and switches**\n')
 
-        #10.0.0.0 - 10.255.255.255 (Classe A) gruppo di indirizzi IP locali 
-        #h0,h1,h3 saranno variabili membro della classe
+        #10.0.0.0 - 10.255.255.255 (Classe A) group of local addresses IP
+        # h0, h1, h3 will be member variables of the class
         self.h1 = self.network.addHost(name='h1',mac='00:00:00:00:00:01',ip='10.0.0.1')
         self.h2 = self.network.addHost(name='h2',mac='00:00:00:00:00:02',ip='10.0.0.2')
         self.h3 = self.network.addHost(name='h3',mac='00:00:00:00:00:03',ip='10.0.0.3')
@@ -37,7 +37,7 @@ class Environmnet(object) :
 
         info('***Adding Links****\n')
 
-        #bw = banda di trasmissione pari a 2Mbs
+        #bw = transmission bandwidth equal to 2Mbs
         self.h1_s1 = self.network.addLink(node1=self.h1,node2=self.s1,cls=TCLink,bw=6,delay='5ms')
         self.h2_s2 = self.network.addLink(node1=self.h2,node2=self.s2,cls=TCLink,bw=6,delay='5ms')
         self.s1_s3 = self.network.addLink(node1=self.s1,node2=self.s3,cls=TCLink,bw=5,delay='20ms')
@@ -47,8 +47,8 @@ class Environmnet(object) :
     
         info('***Starting network***\n')
 
-        self.network.build() #costruisco la rete (build the network)
-        self.network.start() #starta la rete (start the network)
+        self.network.build() #build the network
+        self.network.start() #start the network
 
 
 if __name__ == '__main__' :
