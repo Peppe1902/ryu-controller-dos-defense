@@ -165,3 +165,5 @@ The command to run to generate the traffic with dynamic rate is reported below:
 
 <img width="1000" alt="image" src="https://github.com/user-attachments/assets/6ddefc60-2c6a-42ec-9206-5822f7c630a7" />
 
+- **Red** — UDP traffic
+- **Blue** — TCP traffic
